@@ -2,9 +2,10 @@
 import json
 import os
 import sqlite3
+from datetime import datetime, timedelta
 
 # Third-party libraries
-from flask import Flask, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for
 from flask_login import (
     LoginManager,
     current_user,
@@ -20,8 +21,8 @@ from db import init_db_command
 from user import User
 
 # Configuration
-GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
-GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
+GOOGLE_CLIENT_ID = "685992959593-olqnso3i7mkv0ipo1t3uvup09d4h0smc.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "i5LJWnZaqtgRg6IRuY5p0cF3"
 GOOGLE_DISCOVERY_URL = (
     "https://accounts.google.com/.well-known/openid-configuration"
 )
@@ -53,16 +54,69 @@ def load_user(user_id):
 @app.route("/")
 def index():
     if current_user.is_authenticated:
-        return (
-            "<p>Hello, {}! You're logged in! Email: {}</p>"
-            "<div><p>Google Profile Picture:</p>"
-            '<img src="{}" alt="Google profile pic"></img></div>'
-            '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.name, current_user.email, current_user.profile_pic
-            )
-        )
+        connection = sqlite3.connect("sqlite_db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM todo WHERE op='{}'".format(current_user.id))
+        todos = cursor.fetchall()
+        connection.close()
+
+        now = datetime.now()
+        overdue = []
+        for i in range(len(todos)):
+            due = datetime.strptime(todos[i][3], "%Y-%m-%d")
+            if now > due + timedelta(days=1):
+                overdue.append(todos[i][0])
+        
+        return render_template("index.html", name=current_user.name, overdue=overdue, todos=todos)
     else:
-        return '<a class="button" href="/login">Google Login</a>'
+        return render_template("login.html")
+
+@app.route("/add")
+@login_required
+def add():
+    return render_template("add.html")
+
+@app.route("/submit", methods=["POST"])
+@login_required
+def submit():
+    title = request.form.get("title")
+    details = request.form.get("details")
+    date = request.form.get("date")
+    
+    connection = sqlite3.connect("sqlite_db")
+    cursor = connection.cursor()
+    cursor.execute(
+        "INSERT INTO todo (title, details, due, op) "
+        "VALUES (?, ?, ?, ?)",
+        (title, details, date, current_user.id)
+    )
+    connection.commit()
+    connection.close()
+
+    return redirect("/")
+
+@app.route("/delete")
+@login_required
+def delete():
+    connection = sqlite3.connect("sqlite_db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM todo WHERE op='{}'".format(current_user.id))
+    todos = cursor.fetchall()
+    connection.close()
+    return render_template("delete.html", todos=todos)
+
+@app.route("/deletion", methods=["POST"])
+@login_required
+def deletion():
+    target = request.form.getlist("target")
+    connection = sqlite3.connect("sqlite_db")
+    cursor = connection.cursor()
+    for todelete in target:
+        cursor.execute("DELETE FROM todo WHERE id={}".format(todelete))
+    connection.commit()
+    connection.close()
+
+    return redirect("/")
         
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
@@ -122,20 +176,19 @@ def callback():
     if userinfo_response.json().get("email_verified"):
         unique_id = userinfo_response.json()["sub"]
         users_email = userinfo_response.json()["email"]
-        picture = userinfo_response.json()["picture"]
-        users_name = userinfo_response.json()["given_name"]
+        users_name = userinfo_response.json()["name"]
     else:
         return "User email not available or not verified by Google.", 400
         
     # Create a user in your db with the information provided
     # by Google
     user = User(
-        id_=unique_id, name=users_name, email=users_email, profile_pic=picture
+        id_=unique_id, name=users_name, email=users_email
     )
 
     # Doesn't exist? Add it to the database.
     if not User.get(unique_id):
-        User.create(unique_id, users_name, users_email, picture)
+        User.create(unique_id, users_name, users_email)
 
     # Begin user session by logging the user in
     login_user(user)
@@ -148,3 +201,6 @@ def callback():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+if __name__ == "__main__":
+    app.run(ssl_context="adhoc", debug=True)

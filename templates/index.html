@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>ToDo List</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="static/styles/index.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+    </head>
+    
+    <body>
+        <ul>
+            <li class="circle"><a href="/">td</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/add">Add</a></li>
+            <li><a href="/delete">Delete</a></li>
+            <li style="float:right"><a href="/logout">Logout</a></li>
+        </ul>
+        
+        <div class="header">
+            <h1>• {{ name }}'s To Do List •</h1>
+        </div>
+        
+        {% for todo in todos %}
+            <div class="box">
+                <div class="left">
+                    {% if todo[0] in overdue %}
+                        <span class="circle-red"></span>
+                    {% else %}
+                        <span class="circle-green"></span>
+                    {% endif %}
+                </div>
+                <h1 class="date">{{ todo[3] }}</h1>
+                    
+                <h1>{{ todo[1] }}</h1>
+                <div class="box-bottom">
+                    <h1>{{ todo[2] }}</h1>
+                </div>
+            </div>
+        {% endfor %}
+
+    </body>
+</html>

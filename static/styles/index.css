@@ -1,0 +1,106 @@
+body {
+    font-family: 'Barlow', sans-serif;
+    background-color: lavender;
+    letter-spacing: 0.2em;
+}
+
+ul {
+    width: 75%;
+    list-style-type: none;
+    margin: 30px auto;
+    padding: 10px;
+    overflow: hidden;
+    background-color: white;
+    border: 3px solid white;
+    box-shadow: 0px 3px 5px lightgrey;
+    border-radius: 40px;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    border: 0px solid white;
+    border-radius: 25px;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    color: #333333;
+}
+
+li a:hover {
+    background-color: lavenderblush;
+}
+
+.circle {
+    height: auto;
+    width: auto;    
+    display: inline-block;
+    border: 0px solid white;
+    border-radius: 50%;
+    background-color: lavenderblush;
+    margin: 0 5px;
+}
+
+.header {
+    width: 50%;
+    background-color: lavenderblush;
+    border: 3px solid lavenderblush;
+    box-shadow: 0px 3px 5px lightgrey;
+    margin: 30px auto;
+    border-radius: 100px;
+    text-align: center;
+    font-size: 16px;
+    text-align: center;
+}
+
+.box {
+    width: 60%;
+    background-color: white;
+    border: 3px solid white;
+    box-shadow: 0px 3px 5px lightgrey;
+    margin: 30px auto;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 18px;
+}
+
+.circle-green {
+    height: 25px;
+    width: 25px;
+    background-color: lightgreen;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.circle-red {
+    height: 25px;
+    width: 25px;
+    background-color: lightcoral;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.left {
+    float: left;
+    width: 4%;
+    padding-top: 12px;
+}
+
+.date {
+    font-size: 20px;
+    float: left;
+    width: 96%;
+    color: grey;
+}
+
+.box-bottom {
+    border-top: 3px solid lavenderblush;
+    border-radius: 0px;
+    font-size: 10px;
+}

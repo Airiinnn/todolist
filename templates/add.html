@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>ToDo List</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="static/styles/add.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+    </head>
+    
+    <body>
+        <ul>
+            <li class="circle"><a href="/">td</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/add">Add</a></li>
+            <li><a href="/delete">Delete</a></li>
+            <li style="float:right"><a href="/logout">Logout</a></li>
+        </ul>
+        
+        <div class="header">
+            <h1>• Add a ToDo •</h1>
+        </div>
+
+        <div class="group">
+            <form action="/submit" method="post">
+                <h1>Title:</h1>
+                <textarea class="title" name="title" required></textarea>
+                <hr size=0 width=0%>
+
+                <h1>Details:</h1>
+                <textarea class="details" name="details" required></textarea>
+                <hr size=0 width=0%>
+
+                <h1>Due date:</h1>
+                <input class="date" type="date" name="date" required>
+                <hr size=0 width=0%>
+
+                <input class="submit" type="submit" value="Submit">
+            </form>
+        </div>
+        
+    </body>
+</html>

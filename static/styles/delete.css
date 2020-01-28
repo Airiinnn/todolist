@@ -1,0 +1,95 @@
+body {
+    font-family: 'Barlow', sans-serif;
+    background-color: lavender;
+    letter-spacing: 0.2em;
+}
+
+ul {
+    width: 75%;
+    list-style-type: none;
+    margin: 30px auto;
+    padding: 10px;
+    overflow: hidden;
+    background-color: white;
+    border: 3px solid white;
+    box-shadow: 0px 3px 5px lightgrey;
+    border-radius: 40px;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    border: 0px solid white;
+    border-radius: 25px;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    color: #333333;
+}
+
+li a:hover {
+    background-color: lavenderblush;
+}
+
+.circle {
+    height: auto;
+    width: auto;    
+    display: inline-block;
+    border: 0px solid white;
+    border-radius: 50%;
+    background-color: lavenderblush;
+    margin: 0 5px;
+}
+
+.header {
+    width: 20%;
+    background-color: lavenderblush;
+    border: 3px solid lavenderblush;
+    box-shadow: 0px 3px 5px lightgrey;
+    margin: 30px auto;
+    border-radius: 100px;
+    text-align: center;
+    font-size: 16px;
+    text-align: center;
+}
+
+.group {
+    text-align: center;
+    margin: auto;
+    font-size: 20px; 
+}
+
+.box {
+    width: 50%;
+    background-color: white;
+    border: 3px solid white;
+    box-shadow: 0px 3px 5px lightgrey;
+    margin: 10px auto;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 24px;
+}
+
+.submit {
+    width: 100px;
+    border: none;
+    border-radius: 25px;
+    background-color: white;
+    box-shadow: 0px 3px 5px lightgrey;
+    padding: 5px;
+    margin: 20px;
+    font-size: 20px;
+    font-family: 'Barlow', sans-serif;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+.submit:hover {
+    background-color: lavenderblush;
+}

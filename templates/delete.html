@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>ToDo List</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="static/styles/delete.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+    </head>
+    
+    <body>
+        <ul>
+            <li class="circle"><a href="/">td</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/add">Add</a></li>
+            <li><a href="/delete">Delete</a></li>
+            <li style="float:right"><a href="/logout">Logout</a></li>
+        </ul>
+        
+        <div class="header">
+            <h1>• Delete ToDo •</h1>
+        </div>
+        
+        <div class="group">
+            <form action="/deletion" method="post">
+                <div class="box">
+                    {% for todo in todos %}
+                        <input type="checkbox" name="target" value="{{ todo[0] }}">{{ todo [1] }}</br>
+                    {% endfor %}
+                </div>
+
+                <input class="submit" type="submit" value="Submit">
+            </form>
+        </div>
+
+    </body>
+</html>
